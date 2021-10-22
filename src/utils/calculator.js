@@ -69,7 +69,33 @@ export const generateVariablesConditions = (ptrs, setLoading) => {
                 value,
               });
             } else {
-              contents.forEach((it) => {
+              // contents.forEach((it) => {
+              //   if (it && it.length === 3) {
+              //     const itIndex = _.findIndex(newVariables, { name: it });
+              //     if (itIndex > -1) {
+              //       newVariables[itIndex].value = 0;
+              //     } else {
+              //       // eslint-disable-next-line no-loop-func
+              //       result.noSolution = {
+              //         status: true,
+              //         text: `"${it}" is not existed in variables.`,
+              //       };
+              //     }
+              //   } else if (it && it.length % 3 === 0) {
+              //     newConditions.push({
+              //       contents: [it],
+              //       value,
+              //     });
+              //   } else {
+              //     // eslint-disable-next-line no-loop-func
+              //     result.noSolution = {
+              //       status: true,
+              //       text: `"${it}" is not parsed as variables.`,
+              //     };
+              //   }
+              // });
+              for (let i = 0; i < contents.length; i++) {
+                const it = contents[i];
                 if (it && it.length === 3) {
                   const itIndex = _.findIndex(newVariables, { name: it });
                   if (itIndex > -1) {
@@ -80,6 +106,7 @@ export const generateVariablesConditions = (ptrs, setLoading) => {
                       status: true,
                       text: `"${it}" is not existed in variables.`,
                     };
+                    break;
                   }
                 } else if (it && it.length % 3 === 0) {
                   newConditions.push({
@@ -92,8 +119,9 @@ export const generateVariablesConditions = (ptrs, setLoading) => {
                     status: true,
                     text: `"${it}" is not parsed as variables.`,
                   };
+                  break;
                 }
-              });
+              }
             }
           }
         }
