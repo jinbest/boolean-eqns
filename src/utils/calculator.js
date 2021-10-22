@@ -1,10 +1,10 @@
 import _, { isEmpty } from "lodash";
 
 export const generateVariablesConditions = (ptrs) => {
-  const result = {
+  let result = {
     vars: [],
     cons: [],
-    enable: false,
+    enable: true,
     noSolution: {
       status: false,
       text: "",
@@ -17,6 +17,7 @@ export const generateVariablesConditions = (ptrs) => {
     !ptrs.includes("equations:")
   ) {
     console.log("Can't parse current txt file.");
+    result.enable = false;
     return result;
   }
 
@@ -94,8 +95,24 @@ export const generateVariablesConditions = (ptrs) => {
     return result;
   }
 
+  const value = {
+    variables: newVariables,
+    conditions: newConditions,
+    result,
+  };
+  result = sortBy0(value);
+
+  return result;
+};
+
+const sortBy0 = (value) => {
+  const { variables, conditions, result } = value;
+
+  let newResult = _.cloneDeep(result),
+    newVariables = _.cloneDeep(variables);
+
   const sortConditions1 = [];
-  newConditions.forEach((item) => {
+  conditions.forEach((item) => {
     if (item.value) {
       const newItem = {
         contents: [],
@@ -111,7 +128,7 @@ export const generateVariablesConditions = (ptrs) => {
           for (let i = 0; i < steps; i++) {
             const it = name.substring(i * 3, (i + 1) * 3);
             const itItem = _.find(newVariables, { name: it });
-            if (!_.isEmpty(itItem) && itItem.value === 0) {
+            if (!isEmpty(itItem) && itItem.value === 0) {
               ignore = true;
               break;
             }
@@ -132,7 +149,7 @@ export const generateVariablesConditions = (ptrs) => {
           for (let i = 0; i < steps; i++) {
             const cnt = it.substring(i * 3, (i + 1) * 3);
             const itItem = _.find(newVariables, { name: cnt });
-            if (!_.isEmpty(itItem) && itItem.value === 0) {
+            if (!isEmpty(itItem) && itItem.value === 0) {
               text2 += `${itItem.name} = 0, `;
             }
           }
@@ -143,7 +160,7 @@ export const generateVariablesConditions = (ptrs) => {
           }
         });
         text1 += `${item.value}, ${text2}" is impossible.`;
-        result.noSolution = {
+        newResult.noSolution = {
           status: true,
           text: text1,
         };
@@ -158,7 +175,7 @@ export const generateVariablesConditions = (ptrs) => {
       for (let i = 0; i < steps; i++) {
         const it = content.substring(i * 3, (i + 1) * 3);
         const itItem = _.find(newVariables, { name: it });
-        if (!_.isEmpty(itItem) && itItem.value === 0) {
+        if (!isEmpty(itItem) && itItem.value === 0) {
           ignore = true;
           break;
         }
@@ -169,8 +186,8 @@ export const generateVariablesConditions = (ptrs) => {
     }
   });
 
-  if (result.noSolution.status) {
-    return result;
+  if (newResult.noSolution.status) {
+    return newResult;
   }
 
   const sortConditions2 = [];
@@ -184,7 +201,7 @@ export const generateVariablesConditions = (ptrs) => {
         if (itIndex > -1) {
           newVariables[itIndex].value = 1;
         } else {
-          result.noSolution = {
+          newResult.noSolution = {
             status: true,
             text: `"${it}" is not existed in variables.`,
           };
@@ -195,9 +212,8 @@ export const generateVariablesConditions = (ptrs) => {
     }
   });
 
-  result.vars = newVariables;
-  result.cons = sortConditions2;
-  result.enable = true;
+  newResult.vars = newVariables;
+  newResult.cons = sortConditions2;
 
-  return result;
+  return newResult;
 };
