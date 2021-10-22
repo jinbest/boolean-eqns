@@ -97,6 +97,7 @@ function App() {
 
   return (
     <div className="App">
+      <h1>Simultaneous Equations</h1>
       <div className="buttons">
         <ReactFileReader handleFiles={handleFiles} fileTypes={".txt"}>
           <button>Upload</button>
