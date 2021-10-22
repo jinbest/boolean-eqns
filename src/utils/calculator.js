@@ -1,5 +1,7 @@
 import _, { isEmpty } from "lodash";
 
+// eslint-disable
+
 export const generateVariablesConditions = (ptrs, setLoading) => {
   if (setLoading) {
     setLoading(true);
