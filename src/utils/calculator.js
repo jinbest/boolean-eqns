@@ -1,7 +1,5 @@
 import _, { isEmpty } from "lodash";
 
-// eslint-disable
-
 export const generateVariablesConditions = (ptrs, setLoading) => {
   if (setLoading) {
     setLoading(true);
@@ -77,6 +75,7 @@ export const generateVariablesConditions = (ptrs, setLoading) => {
                   if (itIndex > -1) {
                     newVariables[itIndex].value = 0;
                   } else {
+                    // eslint-disable-next-line no-loop-func
                     result.noSolution = {
                       status: true,
                       text: `"${it}" is not existed in variables.`,
@@ -88,6 +87,7 @@ export const generateVariablesConditions = (ptrs, setLoading) => {
                     value,
                   });
                 } else {
+                  // eslint-disable-next-line no-loop-func
                   result.noSolution = {
                     status: true,
                     text: `"${it}" is not parsed as variables.`,
@@ -101,6 +101,7 @@ export const generateVariablesConditions = (ptrs, setLoading) => {
     }
   }
 
+  // eslint-disable-next-line no-loop-func
   if (result.noSolution.status) {
     if (setLoading) {
       setLoading(false);
@@ -112,6 +113,7 @@ export const generateVariablesConditions = (ptrs, setLoading) => {
   result.cons = newConditions;
 
   result = sortBy0(result);
+  // eslint-disable-next-line no-loop-func
   if (result.noSolution.status) {
     if (setLoading) {
       setLoading(false);
@@ -183,6 +185,7 @@ const sortBy0 = (result) => {
           }
         });
         text1 += `${item.value}, ${text2}" is impossible.`;
+        // eslint-disable-next-line no-loop-func
         newResult.noSolution = {
           status: true,
           text: text1,
@@ -201,6 +204,7 @@ const sortBy0 = (result) => {
 
         if (!itItem || isEmpty(itItem)) {
           ignore = true;
+          // eslint-disable-next-line no-loop-func
           newResult.noSolution = {
             status: true,
             text: `"${it}" is not existed in variables.`,
@@ -218,6 +222,7 @@ const sortBy0 = (result) => {
     }
   });
 
+  // eslint-disable-next-line no-loop-func
   if (newResult.noSolution.status) {
     return newResult;
   }
@@ -235,6 +240,7 @@ const sortBy0 = (result) => {
         if (itIndex > -1) {
           newVariables[itIndex].value = 1;
         } else {
+          // eslint-disable-next-line no-loop-func
           newResult.noSolution = {
             status: true,
             text: `"${it}" is not existed in variables.`,
