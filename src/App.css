@@ -18,11 +18,24 @@
 .inputed {
   border: 1px solid grey;
   padding: 20px;
-  max-width: 250px;
   text-align: left;
   max-height: 700px;
   overflow-y: scroll;
   overflow-x: hidden;
+}
+
+.exported {
+  display: flex;
+  border: 1px solid grey;
+  padding: 20px;
+  text-align: left;
+  max-height: 700px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.exported div {
+  margin: 0 5px;
 }
 
 p {
@@ -43,4 +56,26 @@ p {
 }
 .custom-scroll-bar::-webkit-scrollbar-thumb:hover {
   background: #666;
+}
+
+.viewer {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.viewer div {
+  margin-right: 10px;
+}
+
+.custom-loader {
+  width: 100vw;
+  height: 100vh;
+  background-color: #00000060;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  position: fixed;
+  left: 0;
+  top: 0;
 }
