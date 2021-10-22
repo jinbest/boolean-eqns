@@ -42,6 +42,8 @@ function App() {
   };
 
   const initialize = (ptrs) => {
+    init();
+
     const {
       vars,
       cons,
